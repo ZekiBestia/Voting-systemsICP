@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema de Votaciones</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+h1 {
+    text-align: center;
+    color: #333;
+}
+form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+input[type="text"] {
+    padding: 5px;
+    margin-right: 10px;
+}
+button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #0056b3;
+}
+#votacion {
+    display: none;
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>Sistema de Votaciones</h1>
+    <form id="registro">
+        <input type="text" id="nombre" placeholder="Nombre">
+        <input type="text" id="apellido" placeholder="Apellido">
+        <button type="button" onclick="registrarPersona()">Registrar</button>
+    </form>
+    <div id="votacion">
+        <h2>¡Bienvenido!</h2>
+        <p id="mensaje"></p>
+        <button onclick="mostrarFormularioVotacion()">Votar</button>
+    </div>
+    <div id="formularioVotacion" style="display: none;">
+        <h2>Seleccione una opción</h2>
+        <label for="opcion1"><input type="radio" id="opcion1" name="opcion" value="1"> Opción 1</label><br>
+        <label for="opcion2"><input type="radio" id="opcion2" name="opcion" value="2"> Opción 2</label><br>
+        <label for="opcion3"><input type="radio" id="opcion3" name="opcion" value="3"> Opción 3</label><br>
+        <button onclick="votar()">Votar</button>
+    </div>
+</div>
+<script>
+let personasRegistradas = [];
+
+function registrarPersona() {
+    let nombre = document.getElementById('nombre').value;
+    let apellido = document.getElementById('apellido').value;
+    if (nombre.trim() !== '' && apellido.trim() !== '') {
+        personasRegistradas.push({ nombre, apellido });
+        console.log(`Persona registrada: ${nombre} ${apellido}`);
+        document.getElementById('nombre').value = '';
+        document.getElementById('apellido').value = '';
+        if (personasRegistradas.length === 1) {
+            document.getElementById('votacion').style.display = 'block';
+        }
+    } else {
+        alert('Por favor, introduce un nombre y un apellido válidos.');
+    }
+}
+
+function mostrarFormularioVotacion() {
+    document.getElementById('votacion').style.display = 'none';
+    document.getElementById('formularioVotacion').style.display = 'block';
+}
+
+function votar() {
+    let opcionSeleccionada = document.querySelector('input[name="opcion"]:checked');
+    if (opcionSeleccionada) {
+        let opcion = parseInt(opcionSeleccionada.value);
+        console.log(`Voto registrado para ${personasRegistradas[0].nombre} ${personasRegistradas[0].apellido} - Opción: ${opcion}`);
+    } else {
+        alert('Por favor, selecciona una opción antes de votar.');
+    }
+}
+</script>
+</body>
+</html>
